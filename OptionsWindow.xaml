@@ -12,23 +12,23 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <GroupBox Header="Server Location">
+        <GroupBox x:Name="ServerLocationGroupBox" Header="Server Location">
             <StackPanel>
-                <RadioButton Content="US East" Tag="pingtest-atl.brawlhalla.com" IsChecked="True"/>
-                <RadioButton Content="US West" Tag="pingtest-cal.brawlhalla.com"/>
-                <RadioButton Content="Europe" Tag="pingtest-ams.brawlhalla.com"/>
-                <RadioButton Content="Southeast Asia" Tag="pingtest-sgp.brawlhalla.com"/>
-                <RadioButton Content="Australia" Tag="pingtest-aus.brawlhalla.com"/>
-                <RadioButton Content="Brazil" Tag="pingtest-brs.brawlhalla.com"/>
-                <RadioButton Content="Japan" Tag="pingtest-jpn.brawlhalla.com"/>
+                <RadioButton Content="US East" Tag="pingtest-atl.brawlhalla.com" IsChecked="True" Checked="server_location_checked"/>
+                <RadioButton Content="US West" Tag="pingtest-cal.brawlhalla.com" Checked="server_location_checked"/>
+                <RadioButton Content="Europe" Tag="pingtest-ams.brawlhalla.com" Checked="server_location_checked"/>
+                <RadioButton Content="Southeast Asia" Tag="pingtest-sgp.brawlhalla.com" Checked="server_location_checked"/>
+                <RadioButton Content="Australia" Tag="pingtest-aus.brawlhalla.com" Checked="server_location_checked"/>
+                <RadioButton Content="Brazil" Tag="pingtest-brs.brawlhalla.com" Checked="server_location_checked"/>
+                <RadioButton Content="Japan" Tag="pingtest-jpn.brawlhalla.com" Checked="server_location_checked"/>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Header="Update Rate" Grid.Row="1">
+        <GroupBox x:Name="UpdateRateGroupBox" Header="Update Rate" Grid.Row="1">
             <StackPanel>
-                <RadioButton Content="Slow" Tag="5000.0"/>
-                <RadioButton Content="Medium" Tag="3000.0" IsChecked="True"/>
-                <RadioButton Content="Fast" Tag="1000.0"/>
+                <RadioButton Content="Slow" Tag="5000.0" Checked="update_rate_checked"/>
+                <RadioButton Content="Medium" Tag="3000.0" IsChecked="True" Checked="update_rate_checked"/>
+                <RadioButton Content="Fast" Tag="1000.0" Checked="update_rate_checked"/>
             </StackPanel>
         </GroupBox>
         <Grid Grid.Row="2">

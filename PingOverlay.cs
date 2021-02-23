@@ -21,6 +21,9 @@ namespace BrawlhallaPingNumber
 {
 	public class PingOverlay : IDisposable
 	{
+		public string ping_addr;
+		public float ping_update_interval_ms;
+
 		private readonly GraphicsWindow _window;
 
 		private readonly Dictionary<string, SolidBrush> _brushes;
@@ -28,21 +31,20 @@ namespace BrawlhallaPingNumber
 		private readonly Dictionary<string, Image> _images;
 
 		private string ping_num;
-		private string ping_addr;
 
 		private double screen_height;
 		private double screen_width;
 
 		const float FONT_SIZE = 16.0F;
-		const float PING_UPDATE_INTERVAL_MS = 3000.0F;
 
 		public PingOverlay()
 		{
 			ping_addr = "pingtest-atl.brawlhalla.com";
+			ping_update_interval_ms = 3000.0F;
 
 			// Start a timer to update the ping number regularly
 			UpdatePingNum(null, null);
-			var ping_update_timer = new Timer(PING_UPDATE_INTERVAL_MS);
+			var ping_update_timer = new Timer(ping_update_interval_ms);
 			ping_update_timer.Elapsed += UpdatePingNum;
 			ping_update_timer.AutoReset = true;
 			ping_update_timer.Enabled = true;
@@ -86,6 +88,12 @@ namespace BrawlhallaPingNumber
 			{
 				PingReply reply = pingSender.Send(ping_addr, timeout, buffer, options);
 				ping_num = reply.RoundtripTime.ToString();
+
+				// Attempting to find why ping is randomly returned to 0
+				if (ping_num == "0")
+				{
+					Console.WriteLine("Breakpoint");
+				}
 			}
 			catch (PingException)
 			{

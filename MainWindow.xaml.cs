@@ -21,18 +21,19 @@ namespace BrawlhallaPingNumber
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		OptionsWindow optionsWindow;
+		PingOverlay _overlay;
+		OptionsWindow _optionsWindow;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
 			// Create an unused OptionsWindow object to ensure the logic in ShowOptionsWindow() works on the first execution
-			optionsWindow = new OptionsWindow();
+			_optionsWindow = new OptionsWindow(_overlay);
 
 			// Instantiate and display the ping overlay
-			PingOverlay overlay = new PingOverlay();
-			overlay.Run();
+			_overlay = new PingOverlay();
+			_overlay.Run();
 		}
 
 		private void TrayIconClicked(object sender, RoutedEventArgs e)
@@ -46,11 +47,11 @@ namespace BrawlhallaPingNumber
 
 		private void ShowOptionsWindow()
 		{
-			if (!optionsWindow.IsVisible)
+			if (!_optionsWindow.IsVisible)
 			{
 				// Create the option window object and display it
-				optionsWindow = new OptionsWindow();
-				optionsWindow.Show();
+				_optionsWindow = new OptionsWindow(_overlay);
+				_optionsWindow.Show();
 				System.Windows.Threading.Dispatcher.Run();
 			}
 		}
