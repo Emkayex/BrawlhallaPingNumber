@@ -29,36 +29,36 @@ namespace BrawlhallaPingNumber
 			InitializeComponent();
 		}
 
-		private void apply_settings()
+		private void ApplySettings()
 		{
 			_overlay.PingAddr = _config.PingAddr;
 			_overlay.PingUpdateIntervalMs = _config.PingUpdateIntervalMs;
 			_config.SaveConfig();
 		}
 
-		private void cancel_clicked(object sender, RoutedEventArgs e)
+		private void CancelClicked(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
 
-		private void apply_clicked(object sender, RoutedEventArgs e)
+		private void ApplyClicked(object sender, RoutedEventArgs e)
 		{
-			this.apply_settings();
+			this.ApplySettings();
 		}
 
-		private void ok_clicked(object sender, RoutedEventArgs e)
+		private void OkClicked(object sender, RoutedEventArgs e)
 		{
-			this.apply_settings();
+			this.ApplySettings();
 			this.Close();
 		}
 
-		private void server_location_checked(object sender, RoutedEventArgs e)
+		private void ServerLocationChecked(object sender, RoutedEventArgs e)
 		{
 			string addr = ((RadioButton)sender).Tag.ToString();
 			_config.PingAddr = addr;
 		}
 
-		private void update_rate_checked(object sender, RoutedEventArgs e)
+		private void UpdateRateChecked(object sender, RoutedEventArgs e)
 		{
 			float rate = Convert.ToSingle(((RadioButton)sender).Tag.ToString());
 			_config.PingUpdateIntervalMs = rate;
