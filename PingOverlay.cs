@@ -21,36 +21,36 @@ namespace BrawlhallaPingNumber
 {
 	public class PingOverlay : IDisposable
 	{
-		public string ping_addr;
-		public float ping_update_interval_ms;
-
 		private readonly GraphicsWindow _window;
 
 		private readonly Dictionary<string, SolidBrush> _brushes;
 		private readonly Dictionary<string, Font> _fonts;
 		private readonly Dictionary<string, Image> _images;
 
-		private string ping_num;
+		public string PingAddr;
+		public float PingUpdateIntervalMs;
 
-		private double screen_height;
-		private double screen_width;
+		private string _pingNum;
+
+		private double _screenHeight;
+		private double _screenWidth;
 
 		const float FONT_SIZE = 16.0F;
 
 		public PingOverlay()
 		{
-			ping_addr = "pingtest-atl.brawlhalla.com";
-			ping_update_interval_ms = 3000.0F;
+			PingAddr = "pingtest-atl.brawlhalla.com";
+			PingUpdateIntervalMs = 3000.0F;
 
 			// Start a timer to update the ping number regularly
 			UpdatePingNum(null, null);
-			var ping_update_timer = new Timer(ping_update_interval_ms);
+			var ping_update_timer = new Timer(PingUpdateIntervalMs);
 			ping_update_timer.Elapsed += UpdatePingNum;
 			ping_update_timer.AutoReset = true;
 			ping_update_timer.Enabled = true;
 
-			screen_height = System.Windows.SystemParameters.PrimaryScreenHeight;
-			screen_width = System.Windows.SystemParameters.PrimaryScreenWidth;
+			_screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+			_screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
 
 			_brushes = new Dictionary<string, SolidBrush>();
 			_fonts = new Dictionary<string, Font>();
@@ -63,7 +63,7 @@ namespace BrawlhallaPingNumber
 				TextAntiAliasing = true
 			};
 
-			_window = new GraphicsWindow(0, 0, (int)screen_width, (int)screen_height, gfx)
+			_window = new GraphicsWindow(0, 0, (int)_screenWidth, (int)_screenHeight, gfx)
 			{
 				FPS = 15,
 				IsTopmost = true,
@@ -86,18 +86,18 @@ namespace BrawlhallaPingNumber
 
 			try
 			{
-				PingReply reply = pingSender.Send(ping_addr, timeout, buffer, options);
-				ping_num = reply.RoundtripTime.ToString();
+				PingReply reply = pingSender.Send(PingAddr, timeout, buffer, options);
+				_pingNum = reply.RoundtripTime.ToString();
 
 				// Attempting to find why ping is randomly returned to 0
-				if (ping_num == "0")
+				if (_pingNum == "0")
 				{
 					Console.WriteLine("Breakpoint");
 				}
 			}
 			catch (PingException)
 			{
-				ping_num = ">999";
+				_pingNum = ">999";
 			}
 		}
 
@@ -136,14 +136,14 @@ namespace BrawlhallaPingNumber
 			
 			var padding = 16;
 			var infoText = new StringBuilder()
-				.Append("Ping: ").Append(ping_num).Append(" ms".PadRight(padding))
+				.Append("Ping: ").Append(_pingNum).Append(" ms".PadRight(padding))
 				.ToString();
 
 			gfx.ClearScene(_brushes["background"]);
 
 			// Determine where to draw the text
 			var text_size = gfx.MeasureString(_fonts["consolas"], FONT_SIZE, infoText);
-			float centered_text_x = ((float)screen_width / 2.0F) - (text_size.X / 2.0F);
+			float centered_text_x = ((float)_screenWidth / 2.0F) - (text_size.X / 2.0F);
 
 			gfx.DrawTextWithBackground(_fonts["consolas"], _brushes["green"], _brushes["black"], centered_text_x, 20, infoText);
 		}

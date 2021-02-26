@@ -31,8 +31,8 @@ namespace BrawlhallaPingNumber
 
 		private void apply_settings()
 		{
-			_overlay.ping_addr = _config.PingAddr;
-			_overlay.ping_update_interval_ms = _config.PingUpdateIntervalMs;
+			_overlay.PingAddr = _config.PingAddr;
+			_overlay.PingUpdateIntervalMs = _config.PingUpdateIntervalMs;
 			_config.SaveConfig();
 		}
 
