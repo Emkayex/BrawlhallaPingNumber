@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.Timers;
+using System.Threading;
 
 using GameOverlay.Drawing;
 using GameOverlay.Windows;
@@ -39,14 +40,17 @@ namespace BrawlhallaPingNumber
 
 		public PingOverlay()
 		{
-			PingAddr = "pingtest-atl.brawlhalla.com";
-			PingUpdateIntervalMs = 3000.0F;
+			// Load the settings from the config when starting the overlay
+			var config = new Config();
+			config.LoadConfig();
+			PingAddr = config.PingAddr;
+			PingUpdateIntervalMs = config.PingUpdateIntervalMs;
 
 			// Start a timer to update the ping number regularly
 			UpdatePingNum(null, null);
-			var ping_update_timer = new Timer(PingUpdateIntervalMs);
+			var ping_update_timer = new System.Timers.Timer(PingUpdateIntervalMs);
 			ping_update_timer.Elapsed += UpdatePingNum;
-			ping_update_timer.AutoReset = true;
+			ping_update_timer.AutoReset = false;
 			ping_update_timer.Enabled = true;
 
 			_screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
@@ -87,12 +91,24 @@ namespace BrawlhallaPingNumber
 			try
 			{
 				PingReply reply = pingSender.Send(PingAddr, timeout, buffer, options);
-				_pingNum = reply.RoundtripTime.ToString();
+				var tempPingNum = reply.RoundtripTime.ToString();
 
-				// Attempting to find why ping is randomly returned to 0
-				if (_pingNum == "0")
+				// The Microsoft Ping class is unusual and instead of throwing an error on timeout, it can skip a ping attempt, say it timed out, but return a time of 0
+				// In that case, wait a short period and call the ping function again
+				if (tempPingNum != "0")
 				{
-					Console.WriteLine("Breakpoint");
+					_pingNum = tempPingNum;
+
+					// When the ping is successful, schedule the next ping
+					var ping_update_timer = new System.Timers.Timer(PingUpdateIntervalMs);
+					ping_update_timer.Elapsed += UpdatePingNum;
+					ping_update_timer.AutoReset = false;
+					ping_update_timer.Enabled = true;
+				}
+				else
+				{
+					Thread.Sleep(500);
+					UpdatePingNum(null, null);
 				}
 			}
 			catch (PingException)
