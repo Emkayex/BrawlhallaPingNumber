@@ -24,9 +24,32 @@ namespace BrawlhallaPingNumber
 		{
 			_overlay = overlay;
 			_config = new Config();
-			_config.LoadConfig();
 
 			InitializeComponent();
+
+			// Change the selected buttons on the overlay based on the _config
+			_config.LoadConfig();
+
+			// First set the server location
+			foreach (var child in ServerLocationStackPanel.Children)
+			{
+				// If the tag text is equal to the PingAddr, then set that button as checked
+				var childRadioButton = (RadioButton)child;
+				if (childRadioButton.Tag.ToString() == _config.PingAddr)
+				{
+					childRadioButton.IsChecked = true;
+				}
+			}
+
+			// Next set the update rate
+			foreach (var child in UpdateRateStackPanel.Children)
+			{
+				var childRadioButton = (RadioButton)child;
+				if (Convert.ToSingle(childRadioButton.Tag.ToString()) == _config.PingUpdateIntervalMs)
+				{
+					childRadioButton.IsChecked = true;
+				}
+			}
 		}
 
 		private void ApplySettings()

@@ -13,7 +13,7 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <GroupBox x:Name="ServerLocationGroupBox" Header="Server Location">
-            <StackPanel>
+            <StackPanel x:Name="ServerLocationStackPanel">
                 <RadioButton Content="US East" Tag="pingtest-atl.brawlhalla.com" IsChecked="True" Checked="ServerLocationChecked"/>
                 <RadioButton Content="US West" Tag="pingtest-cal.brawlhalla.com" Checked="ServerLocationChecked"/>
                 <RadioButton Content="Europe" Tag="pingtest-ams.brawlhalla.com" Checked="ServerLocationChecked"/>
@@ -25,7 +25,7 @@
         </GroupBox>
 
         <GroupBox x:Name="UpdateRateGroupBox" Header="Update Rate" Grid.Row="1">
-            <StackPanel>
+            <StackPanel x:Name="UpdateRateStackPanel">
                 <RadioButton Content="Slow" Tag="5000.0" Checked="UpdateRateChecked"/>
                 <RadioButton Content="Medium" Tag="3000.0" IsChecked="True" Checked="UpdateRateChecked"/>
                 <RadioButton Content="Fast" Tag="1000.0" Checked="UpdateRateChecked"/>
