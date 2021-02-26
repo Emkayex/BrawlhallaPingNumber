@@ -18,23 +18,22 @@ namespace BrawlhallaPingNumber
 	public partial class OptionsWindow : Window
 	{
 		PingOverlay _overlay;
-
-		string _ping_addr;
-		float _ping_update_interval_ms;
+		Config _config;
 
 		public OptionsWindow(PingOverlay overlay)
 		{
-			InitializeComponent();
 			_overlay = overlay;
+			_config = new Config();
+			_config.LoadConfig();
 
-			_ping_addr = "pingtest-atl.brawlhalla.com";
-			_ping_update_interval_ms = 3000.0F;
+			InitializeComponent();
 		}
 
 		private void apply_settings()
 		{
-			_overlay.ping_addr = _ping_addr;
-			_overlay.ping_update_interval_ms = _ping_update_interval_ms;
+			_overlay.ping_addr = _config.PingAddr;
+			_overlay.ping_update_interval_ms = _config.PingUpdateIntervalMs;
+			_config.SaveConfig();
 		}
 
 		private void cancel_clicked(object sender, RoutedEventArgs e)
@@ -56,13 +55,13 @@ namespace BrawlhallaPingNumber
 		private void server_location_checked(object sender, RoutedEventArgs e)
 		{
 			string addr = ((RadioButton)sender).Tag.ToString();
-			_ping_addr = addr;
+			_config.PingAddr = addr;
 		}
 
 		private void update_rate_checked(object sender, RoutedEventArgs e)
 		{
 			float rate = Convert.ToSingle(((RadioButton)sender).Tag.ToString());
-			_ping_update_interval_ms = rate;
+			_config.PingUpdateIntervalMs = rate;
 		}
 	}
 }
