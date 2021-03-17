@@ -170,6 +170,12 @@ namespace BrawlhallaPingNumber
 			_window.Join();
 		}
 
+		public void Close()
+		{
+			_window.Dispose();
+			_window.Join();
+		}
+
 		~PingOverlay()
 		{
 			Dispose(false);

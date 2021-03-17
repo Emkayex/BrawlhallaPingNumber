@@ -86,5 +86,11 @@ namespace BrawlhallaPingNumber
 			float rate = Convert.ToSingle(((RadioButton)sender).Tag.ToString());
 			_config.PingUpdateIntervalMs = rate;
 		}
+
+		private void StopClicked(object sender, RoutedEventArgs e)
+		{
+			_overlay.Close();
+			Application.Current.Shutdown();
+		}
 	}
 }

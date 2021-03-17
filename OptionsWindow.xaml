@@ -10,7 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox x:Name="ServerLocationGroupBox" Header="Server Location">
             <StackPanel x:Name="ServerLocationStackPanel">
@@ -32,6 +32,10 @@
             </StackPanel>
         </GroupBox>
         <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -40,6 +44,7 @@
             <Button Content="Cancel" Margin="5,0,2.5,2" Click="CancelClicked"/>
             <Button Content="Apply" Grid.Column="1" Margin="2.5,0,2.5,2" Click="ApplyClicked"/>
             <Button Content="OK" Grid.Column="2" Margin="2.5,0,5,2" Click="OkClicked"/>
+            <Button Content="Stop Ping Meter" Grid.Row="1" Grid.ColumnSpan="3" Margin="2.5,10,5,2" Click="StopClicked"/>
         </Grid>
     </Grid>
 </Window>
